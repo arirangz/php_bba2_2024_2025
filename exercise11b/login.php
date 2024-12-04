@@ -1,8 +1,10 @@
 <?php
-
+session_start();
 function loginUser(string $email, string $password): bool
 {
     if ($email === "test@gmail.com" && $password === "ABC123") {
+        session_regenerate_id(true);
+        $_SESSION["email"] = $email;
         return true;
     } else {
         return false;
@@ -25,6 +27,11 @@ if (isset($_POST["email"])) {
 </head>
 
 <body>
+    <?php if (isset($_SESSION["email"])): ?>
+        <p>Connected user: <?= $_SESSION["email"] ?> <a href="logout.php">Logout</a></p>
+    <?php endif; ?>
+
+
     <h1>Login</h1>
     <form action="" method="post">
         <p>
